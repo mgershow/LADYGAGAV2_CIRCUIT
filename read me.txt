@@ -1,0 +1,18 @@
+Linear And Dynamic GAseous Gradient Apparatus V2
+
+Valve Control Software and Hardware Designs
+
+contents:
+board schematic and pcb files - requires advanced circuits pcb artist software to open
+
+labview code - example code for communicating with valve control board serial interface
+
+teensyduino sketch and hex - arduino sketch and compiled hex file firmware for valve control board. requires arduino v 1.01 programming environment with teensyduino add-on
+
+
+all software and hardware designs are (c) 2012 Marc Gershow.
+
+board schematic and pcb files are licensed under the Creative Commons Attribution-NoDerivs 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nd/3.0/ or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+
+teensyduino sketch and hex and labview code are licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+

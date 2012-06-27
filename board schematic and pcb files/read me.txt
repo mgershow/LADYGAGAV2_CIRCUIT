@@ -1,0 +1,7 @@
+valve control board for revised version of the 
+Linear And Dynamic GAseous Gradient Appratus 
+
+this board design is (c) 2012 Marc Gershow
+any pcbs created from this design or derivates of this design must retain board name (LADY GAGA VALVE CONTROLLER V2) and author attribution (Marc Gershow, Samuel Lab, Harvard University) on the silkscreen.
+
+This material in this folder is licensed under the Creative Commons Attribution-NoDerivs 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nd/3.0/ or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.

@@ -1,0 +1,3 @@
+HWBE pin should be connected to ground through a 2-pin jumper to allow bootloader to run
+
+Workaround: solder a wire to HWBE pin of uc; use this to contact a ground spot while pressing reset button to enable bootloader to run.
