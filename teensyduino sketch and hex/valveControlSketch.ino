@@ -5,10 +5,6 @@
 /* LADY GAGA VERSION 2 VALVE CONTROL SKETCH
  * (C) 2012 Marc Gershow
  * Requires arduino v 1.01 or higher & teensyduino add-on
- * This work is licensed under the Creative Commons Attribution-* NonCommercial-ShareAlike 3.0 Unported License. To view a copy
-* of this license, visit http://creativecommons.org/licenses/by-
-* nc-sa/3.0/ or send a letter to Creative Commons, 444 Castro
-* Street, Suite 900, Mountain View, California, 94041, USA.
  */
 
 /* Serial Commands
@@ -37,6 +33,11 @@
 
 //to do: implement detection and sleep on PE2 to avoid conflicts if more than one board is populated with MCU
 
+#define DIRECTPORT PORTD
+#define DIRECTPIN PIND
+#define DIRECTDDR DDRD
+const int directEnablePin = PIN_E0;
+
 const int MAX_BOARDS = 32;
 const int SERIAL_CHARS_TO_BUFFER = 256;
 const int ssPin = PIN_B0;
@@ -55,7 +56,7 @@ volatile int numValves = 40;
 volatile int cycleNumber = 0;
 
 enum gradientState {grad_forward, grad_reverse, grad_mixed, grad_none};
-volatile gradientState gradientDirection = grad_forward;
+volatile gradientState gradientDirection = grad_none;
 volatile boolean verbose = true;
 
 
@@ -69,6 +70,12 @@ void setup() {
   // set the slaveSelefctPin as an output:
   pinMode (ssPin, OUTPUT);
   digitalWrite(ssPin, HIGH);
+  
+  pinMode (directEnablePin, INPUT_PULLUP);
+  
+  DIRECTDDR = 0x0; //set to input
+  DIRECTPORT = 0xFF; //enable pull-ups
+  
   SPI.begin(); 
   SPI.setBitOrder(MSBFIRST);
   SPI.setDataMode(SPI_MODE1);
@@ -103,7 +110,36 @@ void setValveTime(float time) {
   
 
 void loop() {
-  serialPoll();
+  static boolean direct = false;
+  direct = testForDirect(direct);
+  if (direct) {
+    byte vc = ~(DIRECTPIN); //pull pin low to turn on valve
+    sendValveCode(&vc, 1);
+  } else {
+      serialPoll();
+  }
+}
+
+boolean testForDirect(boolean olddirect) {
+  unsigned long now = millis();
+  boolean direct;
+  //to turn on direct mode, the directEnablePin must be pulled low continuously for 2 ms
+  //to turn off direct mode, the directEnablePin must be left high continuously for 2 ms
+  while (millis() - now >= 0 & millis() - now < 2) {
+    direct = !digitalRead(directEnablePin);
+    if (olddirect == direct) {
+      return olddirect;
+    }
+  }
+  
+  if (direct) {
+    disableGradientInterrupt();
+  } else {
+    if (gradientDirection != grad_none) {
+      enableGradientInterrupt();
+    }
+  }
+  return direct;
 }
 
 void serialPoll() {
