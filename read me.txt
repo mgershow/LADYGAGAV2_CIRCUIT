@@ -10,6 +10,14 @@ labview code - example code for communicating with valve control board serial in
 teensyduino sketch and hex - arduino sketch and compiled hex file firmware for valve control board. requires arduino v 1.01 programming environment with teensyduino add-on
 
 
+---
+to use at90usb128 with windows 8+ machines
+https://fjlaboratories.com/blog/usb-enumeration-windows#windows-81-usb-enumeration
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\usbflags\03EB2FFB0000" /v "osvc" /t REG_BINARY /d "0000" /f
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\usbflags\03EB2FFB0000" /v "SkipContainerIdQuery" /t REG_BINARY /d "01000000" /f
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\usbflags\03EB2FFB0000" /v "SkipBOSDescriptorQuery" /t REG_BINARY /d "01000000" /f
+
+
 all software and hardware designs are (c) 2012 Marc Gershow.
 
 board schematic and pcb files are licensed under the Creative Commons Attribution-NoDerivs 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nd/3.0/ or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
